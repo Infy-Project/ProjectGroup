@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: user
+Build-Jdk: 15.0.2
+Implementation-Title: ConfigServer
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.infy.configserver
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/ConfigServer
+Created-By: Maven Integration for Eclipse
+

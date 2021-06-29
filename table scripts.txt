@@ -1,0 +1,101 @@
+drop schema if exists `user-db`;
+create schema `user-db`;
+use `user-db`;
+
+create table buyer(
+buyer_id integer primary key AUTO_INCREMENT,
+name varchar(50),
+email varchar(255),
+phone_no bigint,
+password varchar(50),
+is_privileged char(1) CHECK(is_privileged IN('Y', 'N')),
+reward_points integer,
+is_active varchar(10) CHECK(is_active IN('Active', 'Inactive'))
+);
+
+insert into buyer values(1001,'Tony','tony@gmail.com',9009009001,'tony@123','Y',0,'Inactive');
+
+create table seller(
+seller_id integer primary key AUTO_INCREMENT,
+name varchar(50),
+email varchar(255),
+phone_no bigint,
+password varchar(50),
+is_active varchar(10) CHECK(is_active IN('Active', 'Inactive'))
+);
+
+insert into seller values(2001,'Steve','steve@gmail.com',9009009002,'steve@123','Inactive');
+
+create table wishlist(
+buyer_id integer,
+prod_id integer,
+
+constraint wishlist_pk primary key(buyer_id,prod_id)
+);
+
+insert into wishlist values(1001, 10101);
+
+create table cart(
+buyer_id integer,
+prod_id integer,
+quantity integer,
+
+constraint cart_pk primary key(buyer_id,prod_id)
+);
+
+insert into cart values(1001, 10101,3);
+
+drop schema if exists `product-db`;
+create schema `product-db`;
+use `product-db`;
+
+create table product(
+prod_id integer primary key AUTO_INCREMENT,
+product_name varchar(50),
+price double,
+stock integer,
+description varchar(50),
+image varchar(50),
+seller_id int,
+category varchar(50),
+sub_category varchar(50),
+product_rating float
+);
+
+insert into product values(10101, 'iPhoneX', 50000.00, 15, 'Apple iPhone X', 'iPhone X', 2001, 'Electronics', 'Smartphones', 5);
+
+create table subscribed_product(
+buyer_id integer,
+prod_id integer,
+quantity integer,
+
+constraint subscribed_prod_pk primary key(buyer_id,prod_id)
+);
+
+insert into subscribed_product values(1001, 10101, 3);
+
+drop schema if exists `order-db`;
+create schema `order-db`;
+use `order-db`;
+
+create table orders(
+order_id integer primary key AUTO_INCREMENT,
+buyer_id integer,
+amount double,
+date DATE,
+address varchar(100),
+status varchar(20) CHECK(status IN('ORDER_PLACED', 'DISPATCHED', 'DELIVERED'))
+);
+
+insert into orders values(5001, 1001, 50000.00, now(), 'No.222, Baker Street, New York', 'DELIVERED'); 
+
+create table products_ordered(
+buyer_id integer,
+prod_id integer,
+seller_id integer,
+quantity integer,
+
+constraint prods_ordered_pk primary key(buyer_id,prod_id)
+);
+
+insert into products_ordered values(1001, 10101, 2001, 3);
